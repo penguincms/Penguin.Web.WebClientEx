@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Penguin.Web.WebClientEx.Local</name>
+        <name>Penguin.Web.WebClientEx</name>
     </assembly>
     <members>
         <member name="T:Penguin.Web.WebClientEx">

@@ -7,12 +7,16 @@
       "DependencyGraph": {
         "$id": "3",
         "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+        "_path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
+        "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.csproj",
         "Dependants": {
           "$id": "4",
           "$values": [
             {
               "$id": "5",
               "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+              "_path": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient",
+              "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient\\Penguin.Web.JsonClient.csproj",
               "Dependants": {
                 "$id": "6",
                 "$values": []
@@ -25,9 +29,7 @@
                   }
                 ]
               },
-              "Name": "Penguin.Web.JsonClient",
-              "_path": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient",
-              "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient\\Penguin.Web.JsonClient.csproj"
+              "Name": "Penguin.Web.JsonClient"
             }
           ]
         },
@@ -35,16 +37,63 @@
           "$id": "8",
           "$values": []
         },
-        "Name": "Penguin.Web.WebClientEx",
-        "_path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
-        "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.csproj"
+        "Name": "Penguin.Web.WebClientEx"
       },
       "LastBuild": {
         "$id": "9",
         "$type": "Penguin.Management.LastBuild, Penguin.Management",
+        "Time": "0001-01-01T00:00:00",
+        "Result": null
+      },
+      "LocalProjectInfo": null,
+      "Generated": "2019-10-25T23:53:00.0727009-07:00",
+      "Path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
+      "Id": "a8adc498-6a10-4fcb-a196-287cc232faca"
+    },
+    {
+      "$id": "10",
+      "$type": "Penguin.Management.MetaData, Penguin.Management",
+      "DependencyGraph": {
+        "$id": "11",
+        "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+        "_path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
+        "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.csproj",
+        "Dependants": {
+          "$id": "12",
+          "$values": [
+            {
+              "$id": "13",
+              "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+              "_path": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient",
+              "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient\\Penguin.Web.JsonClient.csproj",
+              "Dependants": {
+                "$id": "14",
+                "$values": []
+              },
+              "Dependencies": {
+                "$id": "15",
+                "$values": [
+                  {
+                    "$ref": "11"
+                  }
+                ]
+              },
+              "Name": "Penguin.Web.JsonClient"
+            }
+          ]
+        },
+        "Dependencies": {
+          "$id": "16",
+          "$values": []
+        },
+        "Name": "Penguin.Web.WebClientEx"
+      },
+      "LastBuild": {
+        "$id": "17",
+        "$type": "Penguin.Management.LastBuild, Penguin.Management",
         "Time": "2019-10-25T11:17:59.1046573-07:00",
         "Result": {
-          "$id": "10",
+          "$id": "18",
           "$type": "Penguin.Console.ProcessResult, Penguin.Console",
           "Error": "\r\n",
           "ExitCode": 0,
@@ -52,12 +101,12 @@
         }
       },
       "LocalProjectInfo": {
-        "$id": "11",
+        "$id": "19",
         "$type": "Penguin.Management.Environment.LocalProjectInfo, Penguin.Management",
         "_localProject": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.csproj",
         "_localSLN": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.sln",
         "LocalReferences": {
-          "$id": "12",
+          "$id": "20",
           "$values": []
         }
       },
@@ -66,56 +115,56 @@
       "Id": "d6ec7693-8701-4489-9d49-2852f632072d"
     },
     {
-      "$id": "13",
+      "$id": "21",
       "$type": "Penguin.Management.MetaData, Penguin.Management",
       "DependencyGraph": {
-        "$id": "14",
+        "$id": "22",
         "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+        "_path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
+        "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.csproj",
         "Dependants": {
-          "$id": "15",
+          "$id": "23",
           "$values": [
             {
-              "$id": "16",
+              "$id": "24",
               "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+              "_path": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient",
+              "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient\\Penguin.Web.JsonClient.csproj",
               "Dependants": {
-                "$id": "17",
+                "$id": "25",
                 "$values": []
               },
               "Dependencies": {
-                "$id": "18",
+                "$id": "26",
                 "$values": [
                   {
-                    "$ref": "14"
+                    "$ref": "22"
                   }
                 ]
               },
-              "Name": "Penguin.Web.JsonClient",
-              "_path": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient",
-              "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient\\Penguin.Web.JsonClient.csproj"
+              "Name": "Penguin.Web.JsonClient"
             }
           ]
         },
         "Dependencies": {
-          "$id": "19",
+          "$id": "27",
           "$values": []
         },
-        "Name": "Penguin.Web.WebClientEx",
-        "_path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
-        "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.csproj"
+        "Name": "Penguin.Web.WebClientEx"
       },
       "LastBuild": {
-        "$id": "20",
+        "$id": "28",
         "$type": "Penguin.Management.LastBuild, Penguin.Management",
         "Time": "0001-01-01T00:00:00",
         "Result": null
       },
       "LocalProjectInfo": {
-        "$id": "21",
+        "$id": "29",
         "$type": "Penguin.Management.Environment.LocalProjectInfo, Penguin.Management",
         "_localProject": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.csproj",
         "_localSLN": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.sln",
         "LocalReferences": {
-          "$id": "22",
+          "$id": "30",
           "$values": []
         }
       },
@@ -124,56 +173,56 @@
       "Id": "d6ec7693-8701-4489-9d49-2852f632072d"
     },
     {
-      "$id": "23",
+      "$id": "31",
       "$type": "Penguin.Management.MetaData, Penguin.Management",
       "DependencyGraph": {
-        "$id": "24",
+        "$id": "32",
         "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+        "_path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
+        "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.csproj",
         "Dependants": {
-          "$id": "25",
+          "$id": "33",
           "$values": [
             {
-              "$id": "26",
+              "$id": "34",
               "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+              "_path": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient",
+              "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient\\Penguin.Web.JsonClient.csproj",
               "Dependants": {
-                "$id": "27",
+                "$id": "35",
                 "$values": []
               },
               "Dependencies": {
-                "$id": "28",
+                "$id": "36",
                 "$values": [
                   {
-                    "$ref": "24"
+                    "$ref": "32"
                   }
                 ]
               },
-              "Name": "Penguin.Web.JsonClient",
-              "_path": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient",
-              "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient\\Penguin.Web.JsonClient.csproj"
+              "Name": "Penguin.Web.JsonClient"
             }
           ]
         },
         "Dependencies": {
-          "$id": "29",
+          "$id": "37",
           "$values": []
         },
-        "Name": "Penguin.Web.WebClientEx",
-        "_path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
-        "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.csproj"
+        "Name": "Penguin.Web.WebClientEx"
       },
       "LastBuild": {
-        "$id": "30",
+        "$id": "38",
         "$type": "Penguin.Management.LastBuild, Penguin.Management",
         "Time": "0001-01-01T00:00:00",
         "Result": null
       },
       "LocalProjectInfo": {
-        "$id": "31",
+        "$id": "39",
         "$type": "Penguin.Management.Environment.LocalProjectInfo, Penguin.Management",
         "_localProject": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.csproj",
         "_localSLN": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.sln",
         "LocalReferences": {
-          "$id": "32",
+          "$id": "40",
           "$values": []
         }
       },
@@ -182,56 +231,56 @@
       "Id": "d6ec7693-8701-4489-9d49-2852f632072d"
     },
     {
-      "$id": "33",
+      "$id": "41",
       "$type": "Penguin.Management.MetaData, Penguin.Management",
       "DependencyGraph": {
-        "$id": "34",
+        "$id": "42",
         "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+        "_path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
+        "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.csproj",
         "Dependants": {
-          "$id": "35",
+          "$id": "43",
           "$values": [
             {
-              "$id": "36",
+              "$id": "44",
               "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+              "_path": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient",
+              "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient\\Penguin.Web.JsonClient.csproj",
               "Dependants": {
-                "$id": "37",
+                "$id": "45",
                 "$values": []
               },
               "Dependencies": {
-                "$id": "38",
+                "$id": "46",
                 "$values": [
                   {
-                    "$ref": "34"
+                    "$ref": "42"
                   }
                 ]
               },
-              "Name": "Penguin.Web.JsonClient",
-              "_path": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient",
-              "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient\\Penguin.Web.JsonClient.csproj"
+              "Name": "Penguin.Web.JsonClient"
             }
           ]
         },
         "Dependencies": {
-          "$id": "39",
+          "$id": "47",
           "$values": []
         },
-        "Name": "Penguin.Web.WebClientEx",
-        "_path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
-        "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.csproj"
+        "Name": "Penguin.Web.WebClientEx"
       },
       "LastBuild": {
-        "$id": "40",
+        "$id": "48",
         "$type": "Penguin.Management.LastBuild, Penguin.Management",
         "Time": "0001-01-01T00:00:00",
         "Result": null
       },
       "LocalProjectInfo": {
-        "$id": "41",
+        "$id": "49",
         "$type": "Penguin.Management.Environment.LocalProjectInfo, Penguin.Management",
         "_localProject": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.csproj",
         "_localSLN": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.sln",
         "LocalReferences": {
-          "$id": "42",
+          "$id": "50",
           "$values": []
         }
       },
@@ -240,56 +289,56 @@
       "Id": "d6ec7693-8701-4489-9d49-2852f632072d"
     },
     {
-      "$id": "43",
+      "$id": "51",
       "$type": "Penguin.Management.MetaData, Penguin.Management",
       "DependencyGraph": {
-        "$id": "44",
+        "$id": "52",
         "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+        "_path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
+        "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.csproj",
         "Dependants": {
-          "$id": "45",
+          "$id": "53",
           "$values": [
             {
-              "$id": "46",
+              "$id": "54",
               "$type": "Penguin.Management.Environment.DependencyGraph, Penguin.Management",
+              "_path": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient",
+              "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient\\Penguin.Web.JsonClient.csproj",
               "Dependants": {
-                "$id": "47",
+                "$id": "55",
                 "$values": []
               },
               "Dependencies": {
-                "$id": "48",
+                "$id": "56",
                 "$values": [
                   {
-                    "$ref": "44"
+                    "$ref": "52"
                   }
                 ]
               },
-              "Name": "Penguin.Web.JsonClient",
-              "_path": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient",
-              "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.JsonClient\\Penguin.Web.JsonClient.csproj"
+              "Name": "Penguin.Web.JsonClient"
             }
           ]
         },
         "Dependencies": {
-          "$id": "49",
+          "$id": "57",
           "$values": []
         },
-        "Name": "Penguin.Web.WebClientEx",
-        "_path": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx",
-        "_projectFile": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.csproj"
+        "Name": "Penguin.Web.WebClientEx"
       },
       "LastBuild": {
-        "$id": "50",
+        "$id": "58",
         "$type": "Penguin.Management.LastBuild, Penguin.Management",
         "Time": "0001-01-01T00:00:00",
         "Result": null
       },
       "LocalProjectInfo": {
-        "$id": "51",
+        "$id": "59",
         "$type": "Penguin.Management.Environment.LocalProjectInfo, Penguin.Management",
         "_localProject": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.csproj",
         "_localSLN": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.sln",
         "LocalReferences": {
-          "$id": "52",
+          "$id": "60",
           "$values": []
         }
       },
@@ -298,22 +347,22 @@
       "Id": "d6ec7693-8701-4489-9d49-2852f632072d"
     },
     {
-      "$id": "53",
+      "$id": "61",
       "$type": "Penguin.Management.MetaData, Penguin.Management",
       "DependencyGraph": null,
       "LastBuild": {
-        "$id": "54",
+        "$id": "62",
         "$type": "Penguin.Management.LastBuild, Penguin.Management",
         "Time": "0001-01-01T00:00:00",
         "Result": null
       },
       "LocalProjectInfo": {
-        "$id": "55",
+        "$id": "63",
         "$type": "Penguin.Management.Environment.LocalProjectInfo, Penguin.Management",
         "_localProject": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.csproj",
         "_localSLN": "C:\\Penguin\\Repositories\\Penguin.Web.WebClientEx\\Penguin.Web.WebClientEx.Local.sln",
         "LocalReferences": {
-          "$id": "56",
+          "$id": "64",
           "$values": []
         }
       },
