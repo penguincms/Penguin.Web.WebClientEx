@@ -4,6 +4,8 @@
     <PackageProjectUrl>https://github.com/penguincms/Penguin.Web.WebClientEx</PackageProjectUrl>
     <Version>1.0.0</Version>
     <Description>Web client class with slightly extended functionality</Description>
+    <AssemblyName>Penguin.Web.WebClientEx</AssemblyName>
+    <RootNamespace>Penguin.Web.WebClientEx</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4">
