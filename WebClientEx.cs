@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Net;
 
 namespace Penguin.Web
 {
-
     /// <summary>
     /// Webclient with extended functionality stolen from https://stackoverflow.com/questions/1777221/using-cookiecontainer-with-webclient-class
     /// </summary>
     public class WebClientEx : WebClient
     {
+        /// <summary>
+        /// The cookie container being used for requests
+        /// </summary>
+        public CookieContainer CookieContainer { get; set; } = new CookieContainer();
+
         /// <summary>
         /// Creates an instance of this class with an empty cookie container
         /// </summary>
@@ -25,13 +30,16 @@ namespace Penguin.Web
             this.CookieContainer = container;
         }
 
-        /// <summary>
-        /// The cookie container being used for requests
-        /// </summary>
-        public CookieContainer CookieContainer { get; set; } = new CookieContainer();
+        public void SetCookiesFromHeader(string CookieHeader, string host)
+        {
+            foreach (string c in CookieHeader.Split(';'))
+            {
+                CookieContainer.SetCookies(new Uri(host), CookieHeader);
+            }
+        }
 
         /// <summary>
-        /// Overridden to use the cookie container 
+        /// Overridden to use the cookie container
         /// </summary>
         /// <param name="address">The address for the request</param>
         /// <returns>A webrequest for the given address that uses the internal cookie container</returns>
@@ -40,7 +48,7 @@ namespace Penguin.Web
             WebRequest r = base.GetWebRequest(address);
             if (r is HttpWebRequest request)
             {
-                request.CookieContainer = CookieContainer;
+                request.CookieContainer = this.CookieContainer;
             }
             return r;
         }
@@ -54,7 +62,14 @@ namespace Penguin.Web
         protected override WebResponse GetWebResponse(WebRequest request, IAsyncResult result)
         {
             WebResponse response = base.GetWebResponse(request, result);
-            ReadCookies(response);
+            this.ReadCookies(response);
+            return response;
+        }
+
+        protected override WebResponse GetWebResponse(WebRequest request)
+        {
+            WebResponse response = base.GetWebResponse(request);
+            this.ReadCookies(response);
             return response;
         }
 
@@ -63,14 +78,6 @@ namespace Penguin.Web
         /// </summary>
         /// <param name="request">The original request</param>
         /// <returns>The web response</returns>
-
-        protected override WebResponse GetWebResponse(WebRequest request)
-        {
-            WebResponse response = base.GetWebResponse(request);
-            ReadCookies(response);
-            return response;
-        }
-
         /// <summary>
         /// Reads cookies from a web response and stores them internally
         /// </summary>
@@ -80,9 +87,8 @@ namespace Penguin.Web
             if (r is HttpWebResponse response)
             {
                 CookieCollection cookies = response.Cookies;
-                CookieContainer.Add(cookies);
+                this.CookieContainer.Add(cookies);
             }
         }
     }
-
 }
