@@ -46,6 +46,8 @@ namespace Penguin.Web
         protected override WebRequest GetWebRequest(Uri address)
         {
             WebRequest r = base.GetWebRequest(address);
+            (r as HttpWebRequest).AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
             if (r is HttpWebRequest request)
             {
                 request.CookieContainer = this.CookieContainer;
