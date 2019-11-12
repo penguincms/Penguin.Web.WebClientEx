@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Penguin.Web
 {
@@ -109,38 +110,12 @@ namespace Penguin.Web
 
             if (!string.IsNullOrWhiteSpace(setHeader))
             {
-                string thisCookie = string.Empty;
 
-                foreach (string cookie in setHeader.Split(','))
+                setHeader = Regex.Replace(setHeader, "((?i)(Expires)=(?i)[a-z]{3}),", "$1");
+
+                foreach (string cookie in setHeader.Split(","))
                 {
-                    if (thisCookie.ToLower().Contains("path"))
-                    {
-                        Cookie c = splitCookie(thisCookie, r.ResponseUri.Host);
-
-                        if (!readNames.Contains(c.Name))
-                        {
-                            this.CookieContainer.Add(c);
-                            readNames.Add(c.Name);
-                        }
-
-                        thisCookie = cookie.Trim();
-                    }
-                    else
-                    {
-                        if (string.IsNullOrWhiteSpace(thisCookie))
-                        {
-                            thisCookie = cookie;
-                        }
-                        else
-                        {
-                            thisCookie = $"{thisCookie},{cookie}";
-                        }
-                    }
-                }
-
-                if (!string.IsNullOrWhiteSpace(thisCookie))
-                {
-                    Cookie c = splitCookie(thisCookie, r.ResponseUri.Host);
+                    Cookie c = splitCookie(cookie, r.ResponseUri.Host);
 
                     if (!readNames.Contains(c.Name))
                     {
@@ -149,6 +124,7 @@ namespace Penguin.Web
                     }
                 }
             }
+
         }
 
 
