@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Penguin.Web
 {
@@ -15,6 +16,9 @@ namespace Penguin.Web
         /// The cookie container being used for requests
         /// </summary>
         public CookieContainer CookieContainer { get; set; } = new CookieContainer();
+
+        public string UserAgent { get; set; }
+        public bool FollowRedirect { get; set; } = true;
 
         /// <summary>
         /// Creates an instance of this class with an empty cookie container
@@ -47,10 +51,21 @@ namespace Penguin.Web
         /// <returns>A webrequest for the given address that uses the internal cookie container</returns>
         protected override WebRequest GetWebRequest(Uri address)
         {
+            if (!string.IsNullOrWhiteSpace(UserAgent) && !this.Headers.AllKeys.Any(h => h.Equals("user-agent", StringComparison.OrdinalIgnoreCase)))
+            {
+                this.Headers.Add("user-agent", UserAgent);
+            }
+
             WebRequest r = base.GetWebRequest(address);
+
 
             if (r is HttpWebRequest request)
             {
+                if (!FollowRedirect)
+                {
+                    request.AllowAutoRedirect = false;
+                }
+
                 request.CookieContainer = this.CookieContainer;
                 request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             }
