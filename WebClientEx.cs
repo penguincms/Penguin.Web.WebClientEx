@@ -88,7 +88,17 @@ namespace Penguin.Web
 
         protected override WebResponse GetWebResponse(WebRequest request)
         {
-            WebResponse response = base.GetWebResponse(request);
+            WebResponse response;
+            try
+            {
+
+
+                response = base.GetWebResponse(request);
+            } catch (WebException wex) when (!FollowRedirect && wex.Response is HttpWebResponse wexresponse && (int)wexresponse.StatusCode >= 300 && (int)wexresponse.StatusCode < 400)
+            {
+                response = wexresponse;
+            }
+
             this.ReadCookies(response);
             return response;
         }
