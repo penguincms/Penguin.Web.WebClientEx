@@ -6,6 +6,7 @@
     <Description>Web client class with slightly extended functionality</Description>
     <AssemblyName>Penguin.Web.WebClientEx</AssemblyName>
     <RootNamespace>Penguin.Web.WebClientEx</RootNamespace>
+    <DocumentationFile>Penguin.Web.WebClientEx.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4">
