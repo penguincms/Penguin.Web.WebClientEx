@@ -9,6 +9,11 @@
             Webclient with extended functionality stolen from https://stackoverflow.com/questions/1777221/using-cookiecontainer-with-webclient-class
             </summary>
         </member>
+        <member name="P:Penguin.Web.WebClientEx.CookieContainer">
+            <summary>
+            The cookie container being used for requests
+            </summary>
+        </member>
         <member name="M:Penguin.Web.WebClientEx.#ctor">
             <summary>
             Creates an instance of this class with an empty cookie container
@@ -20,14 +25,9 @@
             </summary>
             <param name="container">The container to use</param>
         </member>
-        <member name="P:Penguin.Web.WebClientEx.CookieContainer">
-            <summary>
-            The cookie container being used for requests
-            </summary>
-        </member>
         <member name="M:Penguin.Web.WebClientEx.GetWebRequest(System.Uri)">
             <summary>
-            Overridden to use the cookie container 
+            Overridden to use the cookie container
             </summary>
             <param name="address">The address for the request</param>
             <returns>A webrequest for the given address that uses the internal cookie container</returns>
@@ -40,14 +40,12 @@
             <param name="result">I dont know what this is</param>
             <returns>The web response</returns>
         </member>
-        <member name="M:Penguin.Web.WebClientEx.GetWebResponse(System.Net.WebRequest)">
+        <member name="M:Penguin.Web.WebClientEx.ReadCookies(System.Net.WebResponse)">
             <summary>
             Gets a response from the request and stores its cookies in the internal container
             </summary>
             <param name="request">The original request</param>
             <returns>The web response</returns>
-        </member>
-        <member name="M:Penguin.Web.WebClientEx.ReadCookies(System.Net.WebResponse)">
             <summary>
             Reads cookies from a web response and stores them internally
             </summary>
