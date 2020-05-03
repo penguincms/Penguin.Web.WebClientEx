@@ -1,9 +1,9 @@
 ﻿using Penguin.Extensions.Strings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Linq;
 
 namespace Penguin.Web
 {
@@ -17,8 +17,8 @@ namespace Penguin.Web
         /// </summary>
         public CookieContainer CookieContainer { get; set; } = new CookieContainer();
 
-        public string UserAgent { get; set; }
         public bool FollowRedirect { get; set; } = true;
+        public string UserAgent { get; set; }
 
         /// <summary>
         /// Creates an instance of this class with an empty cookie container
@@ -38,10 +38,19 @@ namespace Penguin.Web
 
         public void SetCookiesFromHeader(string CookieHeader, string host)
         {
-            foreach (string c in CookieHeader.Split(';'))
-            {
+
                 CookieContainer.SetCookies(new Uri(host), CookieHeader);
-            }
+
+        }
+
+        public WebClientExResponse<byte[]> TryDownloadData(string url)
+        {
+            return TryGet(() => { return DownloadData(url); });
+        }
+
+        public WebClientExResponse<string> TryDownloadString(string url)
+        {
+            return TryGet(() => { return DownloadString(url); });
         }
 
         /// <summary>
@@ -57,7 +66,6 @@ namespace Penguin.Web
             }
 
             WebRequest r = base.GetWebRequest(address);
-
 
             if (r is HttpWebRequest request)
             {
@@ -86,14 +94,14 @@ namespace Penguin.Web
             return response;
         }
 
-        
         protected override WebResponse GetWebResponse(WebRequest request)
         {
             WebResponse response;
             try
             {
                 response = base.GetWebResponse(request);
-            } catch (WebException wex) when (!FollowRedirect && wex.Response is HttpWebResponse wexresponse && (int)wexresponse.StatusCode >= 300 && (int)wexresponse.StatusCode < 400)
+            }
+            catch (WebException wex) when (!FollowRedirect && wex.Response is HttpWebResponse wexresponse && (int)wexresponse.StatusCode >= 300 && (int)wexresponse.StatusCode < 400)
             {
                 response = wexresponse;
             }
@@ -105,7 +113,6 @@ namespace Penguin.Web
         /// <summary>
         /// Gets a response from the request and stores its cookies in the internal container
         /// </summary>
-        /// <param name="request">The original request</param>
         /// <returns>The web response</returns>
         /// <summary>
         /// Reads cookies from a web response and stores them internally
@@ -124,22 +131,18 @@ namespace Penguin.Web
                     readNames.Add(c.Name);
                 }
 
-
-
                 this.CookieContainer.Add(cookies);
-
             }
 
             string setHeader = r.Headers["Set-Cookie"];
 
             if (!string.IsNullOrWhiteSpace(setHeader))
             {
-
                 setHeader = Regex.Replace(setHeader, "((?i)(Expires)=(?i)[a-z]{3}),", "$1");
 
                 foreach (string cookie in setHeader.Split(","))
                 {
-                    Cookie c = splitCookie(cookie, r.ResponseUri.Host);
+                    Cookie c = SplitCookie(cookie, r.ResponseUri.Host);
 
                     if (!readNames.Contains(c.Name))
                     {
@@ -148,48 +151,9 @@ namespace Penguin.Web
                     }
                 }
             }
-
         }
 
-
-        private WebClientExResponse<T> TryGet<T>(Func<T> func)
-        {
-            WebClientExResponse<T> result = new WebClientExResponse<T>();
-
-            try
-            {
-                result.Result = func.Invoke();
-
-                result.Success = true;
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                result.Exception = ex;
-
-                result.HttpStatusCode = HttpStatusCode.BadRequest;
-
-                if (ex is WebException wex && wex.Response is HttpWebResponse response)
-                {
-                    result.HttpStatusCode = response.StatusCode;
-                }
-            }
-
-            return result;
-        }
-
-        public WebClientExResponse<string> TryDownloadString(string url)
-        {
-            return TryGet(() => { return DownloadString(url); });
-        }
-
-        public WebClientExResponse<byte[]> TryDownloadData(string url)
-        {
-            return TryGet(() => { return DownloadData(url); });
-        }
-
-        Cookie splitCookie(string cookieString, string host = null)
+        private static Cookie SplitCookie(string cookieString, string host = null)
         {
             string Name = string.Empty;
             string Value = string.Empty;
@@ -238,6 +202,33 @@ namespace Penguin.Web
             }
 
             return c;
+        }
+
+        private WebClientExResponse<T> TryGet<T>(Func<T> func)
+        {
+            WebClientExResponse<T> result = new WebClientExResponse<T>();
+
+            try
+            {
+                result.Result = func.Invoke();
+
+                result.Success = true;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Exception = ex;
+
+                result.HttpStatusCode = HttpStatusCode.BadRequest;
+
+                if (ex is WebException wex && wex.Response is HttpWebResponse response)
+                {
+                    result.HttpStatusCode = response.StatusCode;
+                }
+            }
+
+            return result;
         }
     }
 }

@@ -44,7 +44,6 @@
             <summary>
             Gets a response from the request and stores its cookies in the internal container
             </summary>
-            <param name="request">The original request</param>
             <returns>The web response</returns>
             <summary>
             Reads cookies from a web response and stores them internally
