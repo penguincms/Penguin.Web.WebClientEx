@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageProjectUrl>https://github.com/penguincms/Penguin.Web.WebClientEx</PackageProjectUrl>
-    <Version>1.0.0</Version>
+    <Version>5.0.0</Version>
     <Description>Web client class with slightly extended functionality</Description>
     <AssemblyName>Penguin.Web.WebClientEx</AssemblyName>
     <RootNamespace>Penguin.Web.WebClientEx</RootNamespace>
@@ -13,7 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Penguin.Extensions.String" Version="3.0.3-T9XYC7H" />
+    <PackageReference Include="Penguin.Extensions.String" Version="5.0.0" />
   </ItemGroup>
   <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
 </Project>
