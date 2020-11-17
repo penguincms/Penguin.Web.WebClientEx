@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace Penguin.Web
 {
@@ -31,25 +32,13 @@ namespace Penguin.Web
         /// Creates an instance of this class with the provided cookie container
         /// </summary>
         /// <param name="container">The container to use</param>
-        public WebClientEx(CookieContainer container)
-        {
-            this.CookieContainer = container;
-        }
+        public WebClientEx(CookieContainer container) => this.CookieContainer = container;
 
-        public void SetCookiesFromHeader(string CookieHeader, string host)
-        {
-            CookieContainer.SetCookies(new Uri(host), CookieHeader);
-        }
+        public void SetCookiesFromHeader(string CookieHeader, string host) => this.CookieContainer.SetCookies(new Uri(host), CookieHeader);
 
-        public WebClientExResponse<byte[]> TryDownloadData(string url)
-        {
-            return TryGet(() => { return DownloadData(url); });
-        }
+        public WebClientExResponse<byte[]> TryDownloadData(string url) => this.TryGet(() => { return this.DownloadData(url); });
 
-        public WebClientExResponse<string> TryDownloadString(string url)
-        {
-            return TryGet(() => { return DownloadString(url); });
-        }
+        public WebClientExResponse<string> TryDownloadString(string url) => this.TryGet(() => { return this.DownloadString(url); });
 
         /// <summary>
         /// Overridden to use the cookie container
@@ -58,16 +47,16 @@ namespace Penguin.Web
         /// <returns>A webrequest for the given address that uses the internal cookie container</returns>
         protected override WebRequest GetWebRequest(Uri address)
         {
-            if (!string.IsNullOrWhiteSpace(UserAgent) && !this.Headers.AllKeys.Any(h => h.Equals("user-agent", StringComparison.OrdinalIgnoreCase)))
+            if (!string.IsNullOrWhiteSpace(this.UserAgent) && !this.Headers.AllKeys.Any(h => h.Equals("user-agent", StringComparison.OrdinalIgnoreCase)))
             {
-                this.Headers.Add("user-agent", UserAgent);
+                this.Headers.Add("user-agent", this.UserAgent);
             }
 
             WebRequest r = base.GetWebRequest(address);
 
             if (r is HttpWebRequest request)
             {
-                if (!FollowRedirect)
+                if (!this.FollowRedirect)
                 {
                     request.AllowAutoRedirect = false;
                 }
@@ -99,13 +88,22 @@ namespace Penguin.Web
             {
                 response = base.GetWebResponse(request);
             }
-            catch (WebException wex) when (!FollowRedirect && wex.Response is HttpWebResponse wexresponse && (int)wexresponse.StatusCode >= 300 && (int)wexresponse.StatusCode < 400)
+            catch (WebException wex) when (!this.FollowRedirect && wex.Response is HttpWebResponse wexresponse && (int)wexresponse.StatusCode >= 300 && (int)wexresponse.StatusCode < 400)
             {
                 response = wexresponse;
             }
 
             this.ReadCookies(response);
             return response;
+        }
+
+        public string UploadForm(string url, Dictionary<string,string> postData)
+        {
+            string postDataStr = string.Join("&", postData.Select(kvp => $"{kvp.Key}={HttpUtility.UrlEncode(kvp.Value)}"));
+
+            this.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+
+            return this.UploadString(url, postDataStr);
         }
 
         private static Cookie SplitCookie(string cookieString, string host = null)
