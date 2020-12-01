@@ -18,9 +18,20 @@ namespace Penguin.Web
         /// </summary>
         public CookieContainer CookieContainer { get; set; } = new CookieContainer();
 
+        /// <summary>
+        /// If true, automatically follows redirects. Defaults to true
+        /// </summary>
         public bool FollowRedirect { get; set; } = true;
+
+        /// <summary>
+        /// User agent applied on requests
+        /// </summary>
         public string UserAgent { get; set; }
 
+        /// <summary>
+        /// Timeout for internal webrequest object
+        /// </summary>
+        public int TimeOut { get; set; } = -1;
         /// <summary>
         /// Creates an instance of this class with an empty cookie container
         /// </summary>
@@ -36,9 +47,9 @@ namespace Penguin.Web
 
         public void SetCookiesFromHeader(string CookieHeader, string host) => this.CookieContainer.SetCookies(new Uri(host), CookieHeader);
 
-        public WebClientExResponse<byte[]> TryDownloadData(string url) => this.TryGet(() => { return this.DownloadData(url); });
+        public WebClientExResponse<byte[]> TryDownloadData(string url) => this.TryGet(() => this.DownloadData(url));
 
-        public WebClientExResponse<string> TryDownloadString(string url) => this.TryGet(() => { return this.DownloadString(url); });
+        public WebClientExResponse<string> TryDownloadString(string url) => this.TryGet(() => this.DownloadString(url));
 
         /// <summary>
         /// Overridden to use the cookie container
@@ -53,6 +64,11 @@ namespace Penguin.Web
             }
 
             WebRequest r = base.GetWebRequest(address);
+
+            if (this.TimeOut != -1)
+            {
+                r.Timeout = this.TimeOut;
+            }
 
             if (r is HttpWebRequest request)
             {
@@ -97,6 +113,12 @@ namespace Penguin.Web
             return response;
         }
 
+        /// <summary>
+        /// Uploads a dictionary as a form post, and sets the proper headers
+        /// </summary>
+        /// <param name="url">The Url to post to</param>
+        /// <param name="postData">The data to post in the body</param>
+        /// <returns>body response from server</returns>
         public string UploadForm(string url, Dictionary<string,string> postData)
         {
             string postDataStr = string.Join("&", postData.Select(kvp => $"{kvp.Key}={HttpUtility.UrlEncode(kvp.Value)}"));

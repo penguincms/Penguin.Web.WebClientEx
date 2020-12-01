@@ -14,6 +14,21 @@
             The cookie container being used for requests
             </summary>
         </member>
+        <member name="P:Penguin.Web.WebClientEx.FollowRedirect">
+            <summary>
+            If true, automatically follows redirects. Defaults to true
+            </summary>
+        </member>
+        <member name="P:Penguin.Web.WebClientEx.UserAgent">
+            <summary>
+            User agent applied on requests
+            </summary>
+        </member>
+        <member name="P:Penguin.Web.WebClientEx.TimeOut">
+            <summary>
+            Timeout for internal webrequest object
+            </summary>
+        </member>
         <member name="M:Penguin.Web.WebClientEx.#ctor">
             <summary>
             Creates an instance of this class with an empty cookie container
@@ -39,6 +54,14 @@
             <param name="request">The original request</param>
             <param name="result">I dont know what this is</param>
             <returns>The web response</returns>
+        </member>
+        <member name="M:Penguin.Web.WebClientEx.UploadForm(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Uploads a dictionary as a form post, and sets the proper headers
+            </summary>
+            <param name="url">The Url to post to</param>
+            <param name="postData">The data to post in the body</param>
+            <returns>body response from server</returns>
         </member>
         <member name="M:Penguin.Web.WebClientEx.ReadCookies(System.Net.WebResponse)">
             <summary>
