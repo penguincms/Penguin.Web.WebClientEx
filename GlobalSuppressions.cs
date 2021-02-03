@@ -9,3 +9,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Design", "CA1054:Uri parameters should not be strings", Justification = "<Pending>", Scope = "module")]
 [assembly: SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>", Scope = "member", Target = "~M:Penguin.Web.WebClientEx.SplitCookie(System.String,System.String)~System.Net.Cookie")]
 [assembly: SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>", Scope = "member", Target = "~M:Penguin.Web.WebClientEx.TryGet``1(System.Func{``0})~Penguin.Web.WebClientExResponse{``0}")]
+[assembly: SuppressMessage("Spellchecker", "CRRSP04:A misspelled word has been found", Justification = "<Pending>", Scope = "module")]
