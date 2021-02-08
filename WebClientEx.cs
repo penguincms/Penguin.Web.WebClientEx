@@ -211,7 +211,7 @@ namespace Penguin.Web
             {
                 response = base.GetWebResponse(request);
             }
-            catch (WebException wex) when (this.FollowRedirect && wex.Response is HttpWebResponse wexresponse && (int)wexresponse.StatusCode >= 300 && (int)wexresponse.StatusCode < 400)
+            catch (WebException wex) when (wex.Response is HttpWebResponse wexresponse && (int)wexresponse.StatusCode >= 300 && (int)wexresponse.StatusCode < 400)
             {
                 response = wexresponse;
             }
