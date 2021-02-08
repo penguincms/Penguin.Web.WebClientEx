@@ -4,6 +4,14 @@
         <name>Penguin.Web.WebClientEx</name>
     </assembly>
     <members>
+        <member name="M:Penguin.Web.Extensions.CookieContainerExtensions.GetAllCookies(System.Net.CookieContainer)">
+            <summary>
+            This method will ensure to get all cookies, no matter what the protocol is
+            https://stackoverflow.com/questions/15983166/how-can-i-get-all-cookies-of-a-cookiecontainer
+            </summary>
+            <param name="c"></param>
+            <returns></returns>
+        </member>
         <member name="T:Penguin.Web.WebClientEx">
             <summary>
             Webclient with extended functionality stolen from https://stackoverflow.com/questions/1777221/using-cookiecontainer-with-webclient-class
@@ -29,16 +37,63 @@
             Timeout for internal webrequest object
             </summary>
         </member>
+        <member name="P:Penguin.Web.WebClientEx.FormContentType">
+            <summary>
+            Content type to use for form uploads
+            </summary>
+        </member>
         <member name="M:Penguin.Web.WebClientEx.#ctor">
             <summary>
             Creates an instance of this class with an empty cookie container
             </summary>
+        </member>
+        <member name="M:Penguin.Web.WebClientEx.SaveCookies(System.String)">
+            <summary>
+            Saves the underlying client cookies to a given path for future use
+            </summary>
+            <param name="path">The path to save the cookies</param>
+        </member>
+        <member name="M:Penguin.Web.WebClientEx.UploadHttpQuery(System.String,Penguin.Web.Http.HttpQuery)">
+            <summary>
+            Posts an Http Query object as a form
+            </summary>
+            <param name="url">The url to post to</param>
+            <param name="query">The object to post</param>
+            <returns>the response string from the server</returns>
+        </member>
+        <member name="M:Penguin.Web.WebClientEx.LoadCookies(System.String)">
+            <summary>
+            Loads cookies from a file
+            </summary>
+            <param name="path">The path of the file to load</param>
+            <returns>True if the file exists, otherwise false</returns>
         </member>
         <member name="M:Penguin.Web.WebClientEx.#ctor(System.Net.CookieContainer)">
             <summary>
             Creates an instance of this class with the provided cookie container
             </summary>
             <param name="container">The container to use</param>
+        </member>
+        <member name="M:Penguin.Web.WebClientEx.SetCookiesFromHeader(System.String,System.String)">
+            <summary>
+            Allows adding of cookies to container using host and HTTP header string
+            </summary>
+            <param name="CookieHeader"></param>
+            <param name="host"></param>
+        </member>
+        <member name="M:Penguin.Web.WebClientEx.TryDownloadData(System.String)">
+            <summary>
+            Nofail download data with result details
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Penguin.Web.WebClientEx.TryDownloadString(System.String)">
+            <summary>
+            Nofail download string with result details
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
         </member>
         <member name="M:Penguin.Web.WebClientEx.GetWebRequest(System.Uri)">
             <summary>
@@ -54,6 +109,13 @@
             <param name="request">The original request</param>
             <param name="result">I dont know what this is</param>
             <returns>The web response</returns>
+        </member>
+        <member name="M:Penguin.Web.WebClientEx.GetWebResponse(System.Net.WebRequest)">
+            <summary>
+            Overrides base to support configurable redirect handling and cookies
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
         </member>
         <member name="M:Penguin.Web.WebClientEx.UploadForm(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>

@@ -1,10 +1,14 @@
 ﻿using Penguin.Extensions.Strings;
+using Penguin.Web.Extensions;
+using Penguin.Web.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Web;
+
 
 namespace Penguin.Web
 {
@@ -32,6 +36,11 @@ namespace Penguin.Web
         /// Timeout for internal webrequest object
         /// </summary>
         public int TimeOut { get; set; } = -1;
+
+        /// <summary>
+        /// Content type to use for form uploads
+        /// </summary>
+        public string FormContentType { get; private set; } = "application/x-www-form-urlencoded";
         /// <summary>
         /// Creates an instance of this class with an empty cookie container
         /// </summary>
@@ -40,15 +49,108 @@ namespace Penguin.Web
         }
 
         /// <summary>
+        /// Saves the underlying client cookies to a given path for future use
+        /// </summary>
+        /// <param name="path">The path to save the cookies</param>
+        public void SaveCookies(string path)
+        {
+            List<string> output = new List<string>();
+
+            foreach(Cookie c in this.CookieContainer.GetAllCookies())
+            {
+                output.Add($"{c.Name}\t{c.Value}\t{c.Path}\t{c.Domain}\t{c.Expires}");
+            }
+
+            System.IO.File.WriteAllLines(path, output);
+        }
+
+
+        /// <summary>
+        /// Posts an Http Query object as a form
+        /// </summary>
+        /// <param name="url">The url to post to</param>
+        /// <param name="query">The object to post</param>
+        /// <returns>the response string from the server</returns>
+        public virtual string UploadHttpQuery(string url,  HttpQuery query)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                throw new ArgumentException($"'{nameof(url)}' cannot be null or whitespace.", nameof(url));
+            }
+
+            if (query is null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
+
+            this.Headers[HttpRequestHeader.ContentType] = this.FormContentType;
+
+            return this.UploadString(url, query.ToString());
+        }
+
+        /// <summary>
+        /// Loads cookies from a file
+        /// </summary>
+        /// <param name="path">The path of the file to load</param>
+        /// <returns>True if the file exists, otherwise false</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>")]
+        public bool LoadCookies(string path)
+        {
+            if(!System.IO.File.Exists(path))
+            {
+                return false;
+            }
+
+            this.CookieContainer = new CookieContainer();
+
+            List<string> cookies = System.IO.File.ReadAllLines(path).ToList();
+
+            foreach(string cookieline in cookies)
+            {
+                string[] parts = cookieline.Split('\t');
+
+                string name = parts[0];
+                string value = parts[1];
+                string cpath = parts[2];
+                string domain = parts[3];
+                string expires = parts[4];
+
+                this.CookieContainer.Add(new Cookie(name, value, cpath, domain)
+                {
+                    Expires = DateTime.Parse(expires)
+                });
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Creates an instance of this class with the provided cookie container
         /// </summary>
         /// <param name="container">The container to use</param>
         public WebClientEx(CookieContainer container) => this.CookieContainer = container;
 
+
+        /// <summary>
+        /// Allows adding of cookies to container using host and HTTP header string
+        /// </summary>
+        /// <param name="CookieHeader"></param>
+        /// <param name="host"></param>
         public void SetCookiesFromHeader(string CookieHeader, string host) => this.CookieContainer.SetCookies(new Uri(host), CookieHeader);
 
+
+        /// <summary>
+        /// Nofail download data with result details
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public WebClientExResponse<byte[]> TryDownloadData(string url) => this.TryGet(() => this.DownloadData(url));
 
+        /// <summary>
+        /// Nofail download string with result details
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public WebClientExResponse<string> TryDownloadString(string url) => this.TryGet(() => this.DownloadString(url));
 
         /// <summary>
@@ -97,6 +199,11 @@ namespace Penguin.Web
             return response;
         }
 
+        /// <summary>
+        /// Overrides base to support configurable redirect handling and cookies
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         protected override WebResponse GetWebResponse(WebRequest request)
         {
             WebResponse response;
@@ -121,9 +228,9 @@ namespace Penguin.Web
         /// <returns>body response from server</returns>
         public string UploadForm(string url, Dictionary<string,string> postData)
         {
-            string postDataStr = string.Join("&", postData.Select(kvp => $"{kvp.Key}={HttpUtility.UrlEncode(kvp.Value)}"));
+            string postDataStr = string.Join("&", postData.Select(kvp => $"{kvp.Key}={HttpUtility.UrlEncode(kvp.Value).Replace("!", "%21")}"));
 
-            this.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+            this.Headers.Add("Content-Type", this.FormContentType);
 
             return this.UploadString(url, postDataStr);
         }
