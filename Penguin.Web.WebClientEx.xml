@@ -27,9 +27,9 @@
             If true, automatically follows redirects. Defaults to true
             </summary>
         </member>
-        <member name="P:Penguin.Web.WebClientEx.UserAgent">
+        <member name="P:Penguin.Web.WebClientEx.FormContentType">
             <summary>
-            User agent applied on requests
+            Content type to use for form uploads
             </summary>
         </member>
         <member name="P:Penguin.Web.WebClientEx.TimeOut">
@@ -37,9 +37,9 @@
             Timeout for internal webrequest object
             </summary>
         </member>
-        <member name="P:Penguin.Web.WebClientEx.FormContentType">
+        <member name="P:Penguin.Web.WebClientEx.UserAgent">
             <summary>
-            Content type to use for form uploads
+            User agent applied on requests
             </summary>
         </member>
         <member name="M:Penguin.Web.WebClientEx.#ctor">
@@ -47,19 +47,11 @@
             Creates an instance of this class with an empty cookie container
             </summary>
         </member>
-        <member name="M:Penguin.Web.WebClientEx.SaveCookies(System.String)">
+        <member name="M:Penguin.Web.WebClientEx.#ctor(System.Net.CookieContainer)">
             <summary>
-            Saves the underlying client cookies to a given path for future use
+            Creates an instance of this class with the provided cookie container
             </summary>
-            <param name="path">The path to save the cookies</param>
-        </member>
-        <member name="M:Penguin.Web.WebClientEx.UploadHttpQuery(System.String,Penguin.Web.Http.HttpQuery)">
-            <summary>
-            Posts an Http Query object as a form
-            </summary>
-            <param name="url">The url to post to</param>
-            <param name="query">The object to post</param>
-            <returns>the response string from the server</returns>
+            <param name="container">The container to use</param>
         </member>
         <member name="M:Penguin.Web.WebClientEx.LoadCookies(System.String)">
             <summary>
@@ -68,11 +60,11 @@
             <param name="path">The path of the file to load</param>
             <returns>True if the file exists, otherwise false</returns>
         </member>
-        <member name="M:Penguin.Web.WebClientEx.#ctor(System.Net.CookieContainer)">
+        <member name="M:Penguin.Web.WebClientEx.SaveCookies(System.String)">
             <summary>
-            Creates an instance of this class with the provided cookie container
+            Saves the underlying client cookies to a given path for future use
             </summary>
-            <param name="container">The container to use</param>
+            <param name="path">The path to save the cookies</param>
         </member>
         <member name="M:Penguin.Web.WebClientEx.SetCookiesFromHeader(System.String,System.String)">
             <summary>
@@ -95,6 +87,22 @@
             <param name="url"></param>
             <returns></returns>
         </member>
+        <member name="M:Penguin.Web.WebClientEx.UploadForm(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Uploads a dictionary as a form post, and sets the proper headers
+            </summary>
+            <param name="url">The Url to post to</param>
+            <param name="postData">The data to post in the body</param>
+            <returns>body response from server</returns>
+        </member>
+        <member name="M:Penguin.Web.WebClientEx.UploadHttpQuery(System.String,Penguin.Web.Http.HttpQuery)">
+            <summary>
+            Posts an Http Query object as a form
+            </summary>
+            <param name="url">The url to post to</param>
+            <param name="query">The object to post</param>
+            <returns>the response string from the server</returns>
+        </member>
         <member name="M:Penguin.Web.WebClientEx.GetWebRequest(System.Uri)">
             <summary>
             Overridden to use the cookie container
@@ -116,14 +124,6 @@
             </summary>
             <param name="request"></param>
             <returns></returns>
-        </member>
-        <member name="M:Penguin.Web.WebClientEx.UploadForm(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
-            <summary>
-            Uploads a dictionary as a form post, and sets the proper headers
-            </summary>
-            <param name="url">The Url to post to</param>
-            <param name="postData">The data to post in the body</param>
-            <returns>body response from server</returns>
         </member>
         <member name="M:Penguin.Web.WebClientEx.ReadCookies(System.Net.WebResponse)">
             <summary>
