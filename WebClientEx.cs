@@ -117,14 +117,14 @@ namespace Penguin.Web
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public WebClientExResponse<byte[]> TryDownloadData(string url) => this.TryGet(() => this.DownloadData(url));
+        public WebClientExResponse<byte[]> TryDownloadData(string url) => TryGet(() => this.DownloadData(url));
 
         /// <summary>
         /// Nofail download string with result details
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public WebClientExResponse<string> TryDownloadString(string url) => this.TryGet(() => this.DownloadString(url));
+        public WebClientExResponse<string> TryDownloadString(string url) => TryGet(() => this.DownloadString(url));
 
         /// <summary>
         /// Uploads a dictionary as a form post, and sets the proper headers
@@ -325,7 +325,7 @@ namespace Penguin.Web
             }
         }
 
-        private WebClientExResponse<T> TryGet<T>(Func<T> func)
+        private static WebClientExResponse<T> TryGet<T>(Func<T> func)
         {
             WebClientExResponse<T> result = new WebClientExResponse<T>();
 
