@@ -13,8 +13,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Penguin.Extensions.String" Version="5.0.2-TA9KKLU" />
-    <PackageReference Include="Penguin.Web.Http" Version="1.0.1-TAA4YFP" />
+    <PackageReference Include="Penguin.Extensions.String" Version="5.0.2-TADRIFB" />
+    <PackageReference Include="Penguin.Web.Http" Version="1.0.1-TADRIFB" />
   </ItemGroup>
   <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
 </Project>
