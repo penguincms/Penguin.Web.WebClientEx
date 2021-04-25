@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageProjectUrl>https://github.com/penguincms/Penguin.Web.WebClientEx</PackageProjectUrl>
-    <Version>5.0.1</Version>
+    <Version>5.0.5</Version>
     <Description>Web client class with slightly extended functionality</Description>
     <AssemblyName>Penguin.Web.WebClientEx</AssemblyName>
     <RootNamespace>Penguin.Web.WebClientEx</RootNamespace>
