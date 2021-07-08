@@ -3,6 +3,7 @@ using Penguin.Web.Extensions;
 using Penguin.Web.Http;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -138,7 +139,19 @@ namespace Penguin.Web
 
             this.Headers.Add("Content-Type", this.FormContentType);
 
-            return this.UploadString(url, postDataStr);
+            int tries = 0;
+
+            do
+            {
+                try
+                {
+                    return this.UploadString(url, postDataStr);
+                }
+                catch (System.Net.WebException wex) when (tries++ < 3 && wex.Message.Contains("(502)"))
+                {
+                    Debug.WriteLine(wex.Message);
+                }
+            } while (true);
         }
 
         /// <summary>
