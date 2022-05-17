@@ -14,7 +14,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Penguin.Extensions.String" Version="5.0.6-TAX9354" />
-    <PackageReference Include="Penguin.Web.Http" Version="5.0.6-TAX9354" />
+    <PackageReference Include="Penguin.Web.Http" Version="5.0.6-TAXM8PJ" />
   </ItemGroup>
   <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
 </Project>
