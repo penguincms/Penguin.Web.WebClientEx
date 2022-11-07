@@ -1,6 +1,6 @@
 ﻿using Penguin.Extensions.String;
-using Penguin.Web.Extensions;
 using Penguin.Web.Http;
+using Penguin.Web.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -52,7 +52,10 @@ namespace Penguin.Web
         /// Creates an instance of this class with the provided cookie container
         /// </summary>
         /// <param name="container">The container to use</param>
-        public WebClientEx(CookieContainer container) => this.CookieContainer = container;
+        public WebClientEx(CookieContainer container)
+        {
+            CookieContainer = container;
+        }
 
         /// <summary>
         /// Loads cookies from a file
@@ -67,7 +70,7 @@ namespace Penguin.Web
                 return false;
             }
 
-            this.CookieContainer = new CookieContainer();
+            CookieContainer = new CookieContainer();
 
             List<string> cookies = System.IO.File.ReadAllLines(path).ToList();
 
@@ -81,7 +84,7 @@ namespace Penguin.Web
                 string domain = parts[3];
                 string expires = parts[4];
 
-                this.CookieContainer.Add(new Cookie(name, value, cpath, domain)
+                CookieContainer.Add(new Cookie(name, value, cpath, domain)
                 {
                     Expires = DateTime.Parse(expires)
                 });
@@ -98,7 +101,7 @@ namespace Penguin.Web
         {
             List<string> output = new List<string>();
 
-            foreach (Cookie c in this.CookieContainer.GetAllCookies())
+            foreach (Cookie c in CookieContainer.GetAllCookies())
             {
                 output.Add($"{c.Name}\t{c.Value}\t{c.Path}\t{c.Domain}\t{c.Expires}");
             }
@@ -111,21 +114,30 @@ namespace Penguin.Web
         /// </summary>
         /// <param name="CookieHeader"></param>
         /// <param name="host"></param>
-        public void SetCookiesFromHeader(string CookieHeader, string host) => this.CookieContainer.SetCookies(new Uri(host), CookieHeader);
+        public void SetCookiesFromHeader(string CookieHeader, string host)
+        {
+            CookieContainer.SetCookies(new Uri(host), CookieHeader);
+        }
 
         /// <summary>
         /// Nofail download data with result details
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public WebClientExResponse<byte[]> TryDownloadData(string url) => TryGet(() => this.DownloadData(url));
+        public WebClientExResponse<byte[]> TryDownloadData(string url)
+        {
+            return TryGet(() => DownloadData(url));
+        }
 
         /// <summary>
         /// Nofail download string with result details
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public WebClientExResponse<string> TryDownloadString(string url) => TryGet(() => this.DownloadString(url));
+        public WebClientExResponse<string> TryDownloadString(string url)
+        {
+            return TryGet(() => DownloadString(url));
+        }
 
         /// <summary>
         /// Uploads a dictionary as a form post, and sets the proper headers
@@ -137,7 +149,7 @@ namespace Penguin.Web
         {
             string postDataStr = string.Join("&", postData.Select(kvp => $"{kvp.Key}={HttpUtility.UrlEncode(kvp.Value).Replace("!", "%21")}"));
 
-            this.Headers.Add("Content-Type", this.FormContentType);
+            Headers.Add("Content-Type", FormContentType);
 
             int tries = 0;
 
@@ -145,9 +157,9 @@ namespace Penguin.Web
             {
                 try
                 {
-                    return this.UploadString(url, postDataStr);
+                    return UploadString(url, postDataStr);
                 }
-                catch (System.Net.WebException wex) when (tries++ < 3 && wex.Message.Contains("(502)"))
+                catch (WebException wex) when (tries++ < 3 && wex.Message.Contains("(502)"))
                 {
                     Debug.WriteLine(wex.Message);
                 }
@@ -172,9 +184,9 @@ namespace Penguin.Web
                 throw new ArgumentNullException(nameof(query));
             }
 
-            this.Headers[HttpRequestHeader.ContentType] = this.FormContentType;
+            Headers[HttpRequestHeader.ContentType] = FormContentType;
 
-            return this.UploadString(url, query.ToString());
+            return UploadString(url, query.ToString());
         }
 
         /// <summary>
@@ -184,26 +196,26 @@ namespace Penguin.Web
         /// <returns>A webrequest for the given address that uses the internal cookie container</returns>
         protected override WebRequest GetWebRequest(Uri address)
         {
-            if (!string.IsNullOrWhiteSpace(this.UserAgent) && !this.Headers.AllKeys.Any(h => h.Equals("user-agent", StringComparison.OrdinalIgnoreCase)))
+            if (!string.IsNullOrWhiteSpace(UserAgent) && !Headers.AllKeys.Any(h => h.Equals("user-agent", StringComparison.OrdinalIgnoreCase)))
             {
-                this.Headers.Add("user-agent", this.UserAgent);
+                Headers.Add("user-agent", UserAgent);
             }
 
             WebRequest r = base.GetWebRequest(address);
 
-            if (this.TimeOut != -1)
+            if (TimeOut != -1)
             {
-                r.Timeout = this.TimeOut;
+                r.Timeout = TimeOut;
             }
 
             if (r is HttpWebRequest request)
             {
-                if (!this.FollowRedirect)
+                if (!FollowRedirect)
                 {
                     request.AllowAutoRedirect = false;
                 }
 
-                request.CookieContainer = this.CookieContainer;
+                request.CookieContainer = CookieContainer;
                 request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             }
 
@@ -219,7 +231,7 @@ namespace Penguin.Web
         protected override WebResponse GetWebResponse(WebRequest request, IAsyncResult result)
         {
             WebResponse response = base.GetWebResponse(request, result);
-            this.ReadCookies(response);
+            ReadCookies(response);
             return response;
         }
 
@@ -240,7 +252,7 @@ namespace Penguin.Web
                 response = wexresponse;
             }
 
-            this.ReadCookies(response);
+            ReadCookies(response);
             return response;
         }
 
@@ -295,49 +307,6 @@ namespace Penguin.Web
             return c;
         }
 
-        /// <summary>
-        /// Gets a response from the request and stores its cookies in the internal container
-        /// </summary>
-        /// <returns>The web response</returns>
-        /// <summary>
-        /// Reads cookies from a web response and stores them internally
-        /// </summary>
-        /// <param name="r">The response to read</param>
-        private void ReadCookies(WebResponse r)
-        {
-            HashSet<string> readNames = new HashSet<string>();
-
-            if (r is HttpWebResponse response)
-            {
-                CookieCollection cookies = response.Cookies;
-
-                foreach (Cookie c in cookies)
-                {
-                    readNames.Add(c.Name);
-                }
-
-                this.CookieContainer.Add(cookies);
-            }
-
-            string setHeader = r.Headers["Set-Cookie"];
-
-            if (!string.IsNullOrWhiteSpace(setHeader))
-            {
-                setHeader = Regex.Replace(setHeader, "((?i)(Expires)=(?i)[a-z]{3}),", "$1");
-
-                foreach (string cookie in setHeader.Split(","))
-                {
-                    Cookie c = SplitCookie(cookie, r.ResponseUri.Host);
-
-                    if (!readNames.Contains(c.Name))
-                    {
-                        this.CookieContainer.Add(c);
-                        readNames.Add(c.Name);
-                    }
-                }
-            }
-        }
-
         private static WebClientExResponse<T> TryGet<T>(Func<T> func)
         {
             WebClientExResponse<T> result = new WebClientExResponse<T>();
@@ -363,6 +332,49 @@ namespace Penguin.Web
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets a response from the request and stores its cookies in the internal container
+        /// </summary>
+        /// <returns>The web response</returns>
+        /// <summary>
+        /// Reads cookies from a web response and stores them internally
+        /// </summary>
+        /// <param name="r">The response to read</param>
+        private void ReadCookies(WebResponse r)
+        {
+            HashSet<string> readNames = new HashSet<string>();
+
+            if (r is HttpWebResponse response)
+            {
+                CookieCollection cookies = response.Cookies;
+
+                foreach (Cookie c in cookies)
+                {
+                    _ = readNames.Add(c.Name);
+                }
+
+                CookieContainer.Add(cookies);
+            }
+
+            string setHeader = r.Headers["Set-Cookie"];
+
+            if (!string.IsNullOrWhiteSpace(setHeader))
+            {
+                setHeader = Regex.Replace(setHeader, "((?i)(Expires)=(?i)[a-z]{3}),", "$1");
+
+                foreach (string cookie in setHeader.Split(","))
+                {
+                    Cookie c = SplitCookie(cookie, r.ResponseUri.Host);
+
+                    if (!readNames.Contains(c.Name))
+                    {
+                        CookieContainer.Add(c);
+                        _ = readNames.Add(c.Name);
+                    }
+                }
+            }
         }
     }
 }

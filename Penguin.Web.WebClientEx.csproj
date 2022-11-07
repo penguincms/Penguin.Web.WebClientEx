@@ -5,7 +5,7 @@
     <Version>5.0.5</Version>
     <Description>Web client class with slightly extended functionality</Description>
     <AssemblyName>Penguin.Web.WebClientEx</AssemblyName>
-    <RootNamespace>Penguin.Web.WebClientEx</RootNamespace>
+    <RootNamespace>Penguin.Web</RootNamespace>
     <DocumentationFile>Penguin.Web.WebClientEx.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
