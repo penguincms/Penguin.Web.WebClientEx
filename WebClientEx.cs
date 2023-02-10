@@ -1,6 +1,6 @@
 ﻿using Penguin.Extensions.String;
-using Penguin.Web.Http;
 using Penguin.Web.Extensions;
+using Penguin.Web.Http;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -99,7 +99,7 @@ namespace Penguin.Web
         /// <param name="path">The path to save the cookies</param>
         public void SaveCookies(string path)
         {
-            List<string> output = new List<string>();
+            List<string> output = new();
 
             foreach (Cookie c in CookieContainer.GetAllCookies())
             {
@@ -297,7 +297,7 @@ namespace Penguin.Web
                 Domain = host;
             }
 
-            Cookie c = new Cookie(Name, Value, Path, Domain);
+            Cookie c = new(Name, Value, Path, Domain);
 
             if (expires != DateTime.MinValue)
             {
@@ -309,7 +309,7 @@ namespace Penguin.Web
 
         private static WebClientExResponse<T> TryGet<T>(Func<T> func)
         {
-            WebClientExResponse<T> result = new WebClientExResponse<T>();
+            WebClientExResponse<T> result = new();
 
             try
             {
@@ -344,7 +344,7 @@ namespace Penguin.Web
         /// <param name="r">The response to read</param>
         private void ReadCookies(WebResponse r)
         {
-            HashSet<string> readNames = new HashSet<string>();
+            HashSet<string> readNames = new();
 
             if (r is HttpWebResponse response)
             {
