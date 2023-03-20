@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;net7.0</TargetFrameworks>
-    <PackageProjectUrl>https://github.com/PenguinCMS/Penguin.Web.WebClientEx</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/PenguinCms/Penguin.Web.WebClientEx</PackageProjectUrl>
     <Version>5.0.5</Version>
     <Description>Web client class with slightly extended functionality</Description>
     <AssemblyName>Penguin.Web.WebClientEx</AssemblyName>
@@ -11,10 +11,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Loxifi.UrlBuilder" Version="0.1.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Penguin.Extensions.String" Version="5.2.0" />
     <PackageReference Include="Penguin.Web.Http" Version="5.2.0" />
   </ItemGroup>
